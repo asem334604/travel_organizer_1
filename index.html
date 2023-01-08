@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link href="styles/bootstrap.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="styles/style.css" rel="stylesheet">
+    <title>Travel list</title>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-lg-6">
+            <div>
+                <form action="" class="p-4 rounded rounded-5" id="travel-form" method="post">
+                    <h2 class="my-2">New travel</h2>
+                    <label class="d-block" for="departure">
+                        From
+                        <input class="d-block my-3" id="departure" placeholder="City" required type="text">
+                    </label>
+                    <label class="d-block" for="arrival">
+                        To
+                        <input class="d-block my-3" id="arrival" placeholder="City" required type="text">
+                    </label>
+                    <input class="d-block my-3" id="budget" min="0" placeholder="Budget" required type="number">
+                    <label class="d-block" for="start_date">
+                        Date start
+                        <input class="d-block my-3" id="start_date" required type="date">
+                    </label>
+                    <label class="d-block" for="end_date">
+                        Date end
+                        <input class="d-block my-3" id="end_date" required type="date">
+                    </label>
+                    <label class="d-block" for="persons">
+                        Persons
+                        <select class="d-block" id="persons" required>
+                            <option selected value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8 and more">8 and more</option>
+                        </select>
+                    </label>
+                    <label class="d-block" for="transfer">
+                        Main transfer type
+                        <select class="d-block" id="transfer" required>
+                            <option disabled selected value=""> ---</option>
+                            <option value="bus">Bus</option>
+                            <option value="private car">Private car</option>
+                            <option value="rail">Railway</option>
+                            <option value="fly">Fly</option>
+                            <option value="rented car">Rented car</option>
+                            <option value="taxi">Taxi</option>
+                        </select>
+                    </label>
+                    <div id="error-output"></div>
+                    <div class="my-3 d-flex flex-column">
+                        <input class="btn btn-success" id="submit-create-button" type="submit" value="Save travel">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <h2 class="my-2">Travel history</h2>
+            <div class="my-3 d-flex flex-column">
+                <button class="btn btn-warning" id="clear_button">Clear all travel cards</button>
+            </div>
+            <div id="output-list"></div>
+        </div>
+    </div>
+</div>
+
+<!--modal-->
+<div aria-hidden="false" aria-labelledby="exampleModalLabel" class="modal fade" id="edit-modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit card</h5>
+                <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" id="modal-close-button"
+                        type="button"></button>
+            </div>
+            <div class="modal-body">
+                <form action="" class="p-4 rounded rounded-5" id="edit_form" method="post">
+                    <label class="d-block" for="departure_upd">
+                        From
+                        <input class="d-block my-3" id="departure_upd" placeholder="City" type="text">
+                    </label>
+                    <label class="d-block" for="arrival_upd">
+                        To
+                        <input class="d-block my-3" id="arrival_upd" placeholder="City" type="text">
+                    </label>
+                    <input class="d-block my-3" id="budget_upd" min="0" placeholder="Budget" type="number">
+                    <label class="d-block" for="start_date_upd">
+                        Date start
+                        <input class="d-block my-3" id="start_date_upd" type="date">
+                    </label>
+                    <label class="d-block" for="end_date_upd">
+                        Date end
+                        <input class="d-block my-3" id="end_date_upd" type="date">
+                    </label>
+                    <label class="d-block" for="persons_upd">
+                        Persons
+                        <select class="d-block" id="persons_upd">
+                            <option selected value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8 and more">8 and more</option>
+                        </select>
+                    </label>
+                    <label class="d-block" for="transfer_upd">
+                        Main transfer type
+                        <select class="d-block" id="transfer_upd">
+                            <option selected value=""> ---</option>
+                            <option value="bus">Bus</option>
+                            <option value="private car">Private car</option>
+                            <option value="railway">Railway</option>
+                            <option value="fly">Fly</option>
+                            <option value="rented car">Rented car</option>
+                            <option value="taxi">Taxi</option>
+                        </select>
+                    </label>
+                    <div class="my-3 d-flex flex-column">
+                        <input class="btn btn-success" id="submit-edit-button" type="submit" value="Save edited card">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script crossorigin="anonymous"
+        integrity="sha512-EKWWs1ZcA2ZY9lbLISPz8aGR2+L7JVYqBAYTq5AXgBkSjRSuQEGqWx8R1zAX16KdXPaCjOCaKE8MCpU0wcHlHA=="
+        referrerpolicy="no-referrer"
+        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/js/bootstrap.min.js">
+</script>
+<script src="script.js"></script>
+</body>
+</html>
+
+
