@@ -1,8 +1,8 @@
 (() => {
-
-    const outputField = document.getElementById('output-list') // define output
-    const travelForm = document.getElementById('travel-form'); // define travel form element
-    const editForm = document.getElementById('edit_form'); // define edit form element
+    // define elements
+    const outputField = document.getElementById('output-list');
+    const travelForm = document.getElementById('travel-form');
+    const editForm = document.getElementById('edit_form');
 
     const storageVal = localStorage.getItem("travel-data"); // check if localstorage exists
     const travelArr = (storageVal) ? JSON.parse(storageVal) : []; //yes - transform to array/no -create an empty array
@@ -10,7 +10,10 @@
     // define names for id's and props
     const inputs = ['departure', 'arrival', 'budget', 'startDate', 'endDate', 'persons', 'transfer'];
 
-// create card from form element
+    // update localStorage
+    const updateLocalStorage = () => localStorage.setItem('travel-data', JSON.stringify(travelArr));
+
+    // create card from form element
     travelForm.addEventListener('submit', (event) => {
         event.preventDefault(); // prevent page reload on submit
         let travelCard = inputs.reduce((acc, value) => {
@@ -18,22 +21,21 @@
             return acc;
         }, {})
         travelCard.timestampOfAdded = new Date().getTime();
-        travelCard.addedAt = 'Created: ' + new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString();
-        travelArr.push(travelCard); // adding an object to array
-        localStorage.setItem('travel-data', JSON.stringify(travelArr)); // update localStorage
+        travelCard.addedAt = `Created: ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`;
+        travelArr.push(travelCard);
+        updateLocalStorage();
         travelForm.reset(); // clear form after submit
         render();
     });
 
-// delete all localStorege entries
+    // delete all localStorage entries
     document.getElementById('clear_button').addEventListener('click', () => {
         localStorage.removeItem('travel-data');
         travelArr.length = 0;
         render();
     });
 
-
-// update view
+    // update view
     const render = () => {
         outputField.innerHTML = ['<ul id = "travel-list">', travelArr.map((value, index) => {
             return `
@@ -64,7 +66,7 @@
                 // delete entry
                 if (hasClass('button_delete')) {
                     travelArr.splice(id, 1);
-                    localStorage.setItem('travel-data', JSON.stringify(travelArr)); // update localStorage
+                    updateLocalStorage();
                     render();
                 }
                 // edit entry
@@ -81,11 +83,11 @@
                         })
                         if (Object.values(editCard).join('') !== '') {
                             travelArr[id].timestampOfAdded = new Date().getTime();
-                            travelArr[id].addedAt = 'Edited: ' + new Date().toLocaleDateString()
-                                + ' ' + new Date().toLocaleTimeString();
+                            travelArr[id].addedAt =
+                                `Edited: ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`;
                         }
-                        localStorage.setItem('travel-data', JSON.stringify(travelArr)); // update localStorage
-                        editForm.reset(); // clear form after submit
+                        updateLocalStorage();
+                        editForm.reset();
                         document.getElementById('modal-close-button').click();
                         render();
                     })
@@ -104,11 +106,11 @@
                     return Number(a[val]) - Number(b[val]);
                 })
                 e.target.blur();
-                localStorage.setItem('travel-data', JSON.stringify(travelArr)); // update localStorage
+                updateLocalStorage();
                 render();
             })
     }
 
-// update view
+    // update view
     render();
 })()
