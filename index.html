@@ -24,18 +24,19 @@
                         <input class="d-block my-3" id="arrival" placeholder="City" required type="text">
                     </label>
                     <input class="d-block my-3" id="budget" min="0" placeholder="Budget" required type="number">
-                    <label class="d-block" for="start_date">
+                    <label class="d-block" for="startDate">
                         Date start
-                        <input class="d-block my-3" id="start_date" required type="date">
+                        <input class="d-block my-3" id="startDate" required type="date">
                     </label>
-                    <label class="d-block" for="end_date">
+                    <label class="d-block" for="endDate">
                         Date end
-                        <input class="d-block my-3" id="end_date" required type="date">
+                        <input class="d-block my-3" id="endDate" required type="date">
                     </label>
                     <label class="d-block" for="persons">
                         Persons
                         <select class="d-block" id="persons" required>
-                            <option selected value="1">1</option>
+                            <option disabled selected value="">---</option>
+                            <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
                             <option value="4">4</option>
@@ -66,7 +67,18 @@
         </div>
         <div class="col-12 col-lg-6">
             <h2 class="my-2">Travel history</h2>
+            <div>
+            </div>
             <div class="my-3 d-flex flex-column">
+                <label for="sort_option">
+                    Sort cards
+                    <select class="form-control my-3" id="sort_option" name="sort_option">
+                        <option value="timestampOfAdded">Date added</option>
+                        <option value="budget">Budget</option>
+                        <option value="startDate">date start</option>
+                        <option value="persons">Persons</option>
+                    </select>
+                </label>
                 <button class="btn btn-warning" id="clear_button">Clear all travel cards</button>
             </div>
             <div id="output-list"></div>
@@ -85,27 +97,28 @@
             </div>
             <div class="modal-body">
                 <form action="" class="p-4 rounded rounded-5" id="edit_form" method="post">
-                    <label class="d-block" for="departure_upd">
+                    <label class="d-block" for="departureEdit">
                         From
-                        <input class="d-block my-3" id="departure_upd" placeholder="City" type="text">
+                        <input class="d-block my-3" id="departureEdit" placeholder="City" type="text">
                     </label>
-                    <label class="d-block" for="arrival_upd">
+                    <label class="d-block" for="arrivalEdit">
                         To
-                        <input class="d-block my-3" id="arrival_upd" placeholder="City" type="text">
+                        <input class="d-block my-3" id="arrivalEdit" placeholder="City" type="text">
                     </label>
-                    <input class="d-block my-3" id="budget_upd" min="0" placeholder="Budget" type="number">
-                    <label class="d-block" for="start_date_upd">
+                    <input class="d-block my-3" id="budgetEdit" min="0" placeholder="Budget" type="number">
+                    <label class="d-block" for="startDateEdit">
                         Date start
-                        <input class="d-block my-3" id="start_date_upd" type="date">
+                        <input class="d-block my-3" id="startDateEdit" type="date">
                     </label>
-                    <label class="d-block" for="end_date_upd">
+                    <label class="d-block" for="endDateEdit">
                         Date end
-                        <input class="d-block my-3" id="end_date_upd" type="date">
+                        <input class="d-block my-3" id="endDateEdit" type="date">
                     </label>
-                    <label class="d-block" for="persons_upd">
+                    <label class="d-block" for="personsEdit">
                         Persons
-                        <select class="d-block" id="persons_upd">
-                            <option selected value="1">1</option>
+                        <select class="d-block" id="personsEdit">
+                            <option selected value="">---</option>
+                            <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
                             <option value="4">4</option>
@@ -115,10 +128,10 @@
                             <option value="8 and more">8 and more</option>
                         </select>
                     </label>
-                    <label class="d-block" for="transfer_upd">
+                    <label class="d-block" for="transferEdit">
                         Main transfer type
-                        <select class="d-block" id="transfer_upd">
-                            <option selected value=""> ---</option>
+                        <select class="d-block" id="transferEdit">
+                            <option selected value="">---</option>
                             <option value="bus">Bus</option>
                             <option value="private car">Private car</option>
                             <option value="railway">Railway</option>
